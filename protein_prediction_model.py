@@ -67,10 +67,10 @@ label_one_hot_df = pd.get_dummies(labels)
 one_hot = np.array(label_one_hot_df)
 print(one_hot[0:5,:])
 
-# Second neuron in NN indicates that person has a disease [1 0] 1=True, 0=False
 
 
-# Split dataset into training + testing (33%)
+
+
 # We are only taking the data that will be used for training only
 print(type(featuresScale))
 print(featuresScale.shape)
@@ -106,10 +106,8 @@ print(train_lab[:5])
 
 
 # Create the Neural Network Model
-# Input has
-# Layer size 19
-# Output has two neurons [01] has a disease [10] no disease. First neuron becomes one
-# Person does not have disease if second neuron is one person has a disease
+
+
 feat_shape = train_feats.shape[1]
 print(feat_shape)
 hidden_nodes = 7
@@ -277,7 +275,7 @@ print(predicted_classes)
 import pandas as pd
 
 # Load the CSV file with test data into a DataFrame
-test_data = pd.read_csv('./BA_NORMtoTakeda_Testing_1.csv')
+test_data = pd.read_csv('data_file_Testing_1.csv')
 
 # Make predictions on the preprocessed test data
 predictions = model.predict(test_data)
