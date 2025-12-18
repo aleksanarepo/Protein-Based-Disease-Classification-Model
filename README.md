@@ -1,179 +1,64 @@
-# MASH Protein Biomarker Prediction Model
+# Protein-Based Disease Classification Model
 
-A machine learning approach for distinguishing MASH (Metabolic Dysfunction-Associated Steatohepatitis) from healthy controls using 19 protein biomarkers.
+A deep learning model for binary classification of MASH (Metabolic dysfunction-Associated Steatohepatitis) vs Healthy Controls based on protein expression data.
 
 ## Overview
 
-This repository contains a neural network-based classification model that achieves 97% accuracy in distinguishing MASH patients from healthy controls using a panel of 19 protein biomarkers. The model demonstrates the feasibility of protein-based diagnostic approaches for metabolic liver disease.
+This project implements a neural network classifier using TensorFlow/Keras to predict disease status from protein biomarkers. The model achieves high classification accuracy with proper regularization techniques.
 
-## Key Features
+## Requirements
 
-- **High Accuracy**: 97% classification accuracy on independent test dataset
-- **19 Protein Biomarkers**: Comprehensive panel including acute phase proteins, liver function markers, and inflammatory cytokines
-- **Multiple ML Approaches**: Implementation of neural networks, Ridge regression, and k-NN for comparison
-- **Bootstrap Validation**: Statistical confidence intervals for performance metrics
-- **SHAP Analysis**: Feature importance and model interpretability
-
-## Dataset
-
-- **Training Set**: 30 samples (augmented for healthy controls)
-- **Independent Test Set**: 36 samples
-- **Features**: 19 protein biomarkers
-- **Classes**: Binary classification (MASH vs Healthy Controls)
-
-### Protein Biomarkers
-
-| Category | Proteins |
-|----------|----------|
-| Acute Phase Proteins | SAA1, SERPINA3 |
-| Liver Function | ARG1, GSTA2, FABPA |
-| Metabolic Markers | IGFbp, PPBP |
-| Inflammatory Cytokines | IL27RA, OSMR |
-| Other | HP, HPX, SERPINA7, PTPA, CLC1B, FRIH, TIMP2, FYN, S100A4, ANKRD |
+```
+tensorflow==2.14.0
+keras==2.14.0
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+```
 
 ## Model Architecture
 
-- **Input Layer**: 19 features (protein biomarkers)
-- **Hidden Layer**: 7 neurons with ReLU activation
-- **Output Layer**: 2 neurons with softmax activation (binary classification)
+- **Input Layer**: Protein expression features
+- **Hidden Layers**: Dense layers with L1/L2 regularization
+- **Dropout**: Applied for regularization
+- **Output Layer**: Binary classification (sigmoid activation)
 - **Optimizer**: Adam
-- **Loss Function**: Categorical cross-entropy
+- **Loss Function**: Binary crossentropy
 
-## Results
+## Features
 
-### Performance Metrics (Threshold = 0.97)
-- **Accuracy**: 97.3%
-- **Sensitivity**: 100%
-- **Specificity**: 94.7%
-- **Precision**: 94.7%
-- **F1 Score**: 97.3%
-
-### Confusion Matrix
-```
-                Predicted
-              MASH    HC
-Actual MASH    18     0
-       HC       1    18
-```
-
-## Installation
-
-### Requirements
-```bash
-pip install -r requirements.txt
-```
-
-### Dependencies
-- Python 3.8+
-- TensorFlow 2.14.0
-- Keras 2.14.0
-- NumPy
-- Pandas
-- Scikit-learn
-- Matplotlib
-- Seaborn
-- SHAP
+- Data normalization and standardization
+- Class imbalance handling with class weights
+- Early stopping to prevent overfitting
+- Model checkpointing
+- Comprehensive evaluation metrics:
+  - Confusion matrix
+  - ROC curve and AUC
+  - Classification report
+  - Sensitivity and specificity
 
 ## Usage
 
-### Training the Model
+1. Load your protein expression data (CSV format)
+2. Preprocess data with normalization/scaling
+3. Train the model with the provided architecture
+4. Evaluate using confusion matrix and ROC curves
+5. Save the trained model for inference
 
-```python
-# Run the Jupyter notebook
-jupyter notebook Protein_prediction_Model.ipynb
-```
+## Model Performance
 
-### Making Predictions
+The model demonstrates excellent classification performance with near-perfect separation between MASH and healthy control samples based on the confusion matrix results.
 
-```python
-from keras.models import load_model
-import numpy as np
-
-# Load trained model
-model = load_model('mash_model.h5')
-
-# Prepare your data (19 protein values)
-sample = np.array([[...]])  # Your 19 protein measurements
-
-# Make prediction
-prediction = model.predict(sample)
-print(f"MASH probability: {prediction[0][1]:.4f}")
-```
-
-## Project Structure
+## File Structure
 
 ```
-.
-├── README.md
-├── requirements.txt
-├── LICENSE
-├── Protein_prediction_Model.ipynb
-├── data/
-│   ├── train.csv
-│   └── test.csv
-├── models/
-│   └── mash_model.h5
-├── results/
-│   ├── confusion_matrix.png
-│   ├── roc_curve.png
-│   └── shap_analysis.png
-└── docs/
-    └── methodology.md
+Protein_prediction_Model.ipynb - Main notebook with complete pipeline
 ```
 
-## Methodology
+## Notes
 
-1. **Data Preprocessing**: Feature scaling and normalization
-2. **Feature Selection**: Ridge regression to identify key biomarkers
-3. **Model Training**: Neural network with 20,000 epochs (converges ~2,000 epochs)
-4. **Validation**: Independent test set (no data leakage)
-5. **Bootstrap Analysis**: 1,000 iterations for confidence intervals
-6. **Interpretability**: SHAP values for feature importance
-
-## Limitations
-
-- **Small Sample Size**: Limited to 30 training and 36 test samples
-- **Augmented Data**: Healthy controls augmented due to limited availability
-- **Single Population**: Validation needed across diverse demographics
-- **Exploratory Study**: Proof-of-concept requiring larger validation cohorts
-
-## Future Work
-
-- External validation on independent cohorts
-- Integration with clinical workflows
-- Cost-effectiveness analysis
-- Prospective clinical trials
-- Regulatory approval pathway
-
-## Citation
-
-If you use this code in your research, please cite:
-
-```bibtex
-@software{mash_protein_prediction,
-  title={MASH Protein Biomarker Prediction Model},
-  author={Your Name},
-  year={2024},
-  url={https://github.com/yourusername/mash-protein-prediction}
-}
-```
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Data collection and clinical validation team
-- Proteomics facility for biomarker measurements
-- Research funding sources
-
-## Contact
-
-For questions or collaborations:
-- Email: your.email@institution.edu
-- GitHub: [@yourusername](https://github.com/yourusername)
-
-## Disclaimer
-
-This model is for research purposes only and should not be used for clinical diagnosis without proper validation and regulatory approval.
+- Threshold for classification can be adjusted (default: 0.97)
+- Model uses early stopping with patience=10
+- Training includes validation split for monitoring
