@@ -6,7 +6,7 @@ MASH (Metabolic dysfunction-Associated Steatohepatitis) vs Healthy Controls
 based on protein expression data.
 
 Author: A.Leszczynska
-Date: 2024
+Date: 2022
 """
 
 # ============================================================================
