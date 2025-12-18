@@ -5,7 +5,7 @@ This script implements a deep learning model for binary classification of
 MASH (Metabolic dysfunction-Associated Steatohepatitis) vs Healthy Controls 
 based on protein expression data.
 
-Author: Your Name
+Author: A.Leszczynska
 Date: 2024
 """
 
@@ -36,7 +36,7 @@ from sklearn.metrics import confusion_matrix, accuracy_score
 # ============================================================================
 # 3. DATA LOADING AND EXPLORATION
 # ============================================================================
-data = pd.read_csv('data/Protein_DLModel_training_with0syntheticINCLUD.csv')
+data = pd.read_csv('data_file_training.csv')
 data.head(31)
 
 data.shape
@@ -51,34 +51,34 @@ print(featuresScale.shape)
 # ============================================================================
 # 4. FEATURE ENGINEERING
 # ============================================================================
-#print response variable
-#labels data class values
+# Print response variable
+# Labels data class values
 labels = np.array(data['CLASS'])
 print(type(labels))
 labels[0:20]
 
 
-#encode reponse variable as one-hot
-#pullout labels data
-#get dummies in pandas that can do conversion one-hot
-#Pandas gives in dataframe and then convert in to array nparray
+# Encode response variable as one-hot
+# Pull out labels data
+# Get dummies in pandas that can do conversion one-hot
+# Pandas gives in dataframe and then convert in to array nparray
 
 label_one_hot_df = pd.get_dummies(labels)
 one_hot = np.array(label_one_hot_df)
 print(one_hot[0:5,:])
 
-#second neouron in NN indicates that person has a disease [1 0] 1=True, 0= False
+# Second neuron in NN indicates that person has a disease [1 0] 1=True, 0=False
 
 
-#Split  dataset into training + testing (33%)
-# we are only taking the data that will be used for training only
+# Split dataset into training + testing (33%)
+# We are only taking the data that will be used for training only
 print(type(featuresScale))
 print(featuresScale.shape)
 print(type(one_hot))
 print(one_hot.shape)
 train_feats = featuresScale
 train_lab = one_hot
-####### not doing the split of the data## but here is the code
+####### Not doing the split of the data## but here is the code
 # train_feats, test_feats, train_lab, test_lab = train_test_split(featuresScale, one_hot, test_size= 0.33, random_state=RANDOM_SEED)
 # train_feats, test_feats, train_lab, test_lab = train_test_split(featuresScale, one_hot, test_size= 0.001, random_state=RANDOM_SEED)
 #
@@ -94,24 +94,24 @@ print(train_lab.shape)
 # ============================================================================
 # 5. MODEL ARCHITECTURE
 # ============================================================================
-#pritn Training +Testing data
-#to confirm everything is okay
+# Print Training + Testing data
+# To confirm everything is okay
 print("Training Predictor Vars")
 print(type(train_feats))
 print(train_feats.shape)
 print(train_feats[:5,:1])
 
-print("\n\nTraining REsponse Vars")
+print("\n\nTraining Response Vars")
 print(type(train_lab))
 print(train_lab.shape)
 print(train_lab[:5])
 
 
-#create  the Neuran NEtwor Model
-# input has
+# Create the Neural Network Model
+# Input has
 # Layer size 19
-# output has two neurons [01] has a disease [10] no disease. First neuron becomes one
-# person dose not have disease if second neuron is one person has a disease
+# Output has two neurons [01] has a disease [10] no disease. First neuron becomes one
+# Person does not have disease if second neuron is one person has a disease
 feat_shape = train_feats.shape[1]
 print(feat_shape)
 hidden_nodes = 7
@@ -122,21 +122,21 @@ print(out_shape)
 # ============================================================================
 # 6. MODEL TRAINING
 # ============================================================================
-#keras to build the NN load libraries and model
+# Keras to build the NN load libraries and model
 import keras as ks
 from keras.models import Sequential
 from keras.layers import Dense, Activation
 print ('keras_version: ', ks.__version__)
 
-# 2 different activation function
-#hidden RrLU
-#output layer softmax- need to compute probaboitity of each of clases (species)
-#Build the model in KERAS
+# 2 different activation functions
+# Hidden ReLU
+# Output layer softmax - need to compute probability of each of classes (species)
+# Build the model in KERAS
 model = Sequential()
 model.add(Dense(hidden_nodes, activation='relu', input_dim=feat_shape))
 model.add(Dense(out_shape, activation= 'softmax'))
-#Build NN
-#compile model
+# Build NN
+# Compile model
 
 model.compile(loss= 'categorical_crossentropy', optimizer= 'adam')
 model.summary()
@@ -146,8 +146,8 @@ model.summary()
 # ============================================================================
 # 7. MODEL EVALUATION
 # ============================================================================
-#train the model
-# feed in train feeds -training features and feed in train labs means one-hot variable
+# Train the model
+# Feed in train features - training features and feed in train labs means one-hot variable
 #
 print(train_feats.shape)
 print(train_lab.shape)
@@ -168,9 +168,9 @@ plt.ylabel('loss')
 plt.title('train_loss')
 plt.grid(True)
 plt.style.use(['ggplot'])
-#loss function soo becomes zero means model has converged
+# Loss function soon becomes zero means model has converged
 
-# print values of all the weights and bias of all the neurons of NN
+# Print values of all the weights and bias of all the neurons of NN
 #
 
 for layerNum, layer in enumerate(model.layers):
@@ -188,17 +188,17 @@ for layerNum, layer in enumerate(model.layers):
 
 
 
-#predictions
-# Take the first observation from the train detaset to test the model.
+# Predictions
+# Take the first observation from the train dataset to test the model.
 
-#model.predict(train_feats[0:1], batch_size=None, verbose=0 steps=None)
+# model.predict(train_feats[0:1], batch_size=None, verbose=0 steps=None)
 test_feats2 = np.array([[-0.3723,-0.44599, -0.41352, -0.42817, -0.46598, -0.43858, -0.4114, -0.37505, -0.33182, -0.08496, -0.44128,-0.21554, 2.213466, 2.213466, -0.42611, -0.36788, -0.39346, -0.37888, -0.47216]])
 print(type(test_feats2))
 print(test_feats2.shape)
 print(test_feats2[:5,:])
 
 #######
-print("Test2 REsponse Vars")
+print("Test2 Response Vars")
 test_lab2 = np.array([[1,0]])
 print(type(test_lab2))
 print(test_lab2.shape)
@@ -209,7 +209,7 @@ print(test_lab2[:5])
 
 # Assuming you have preprocessed your test data in the same way as your training data
 # Make predictions on the test data (test_feats2)
-#This one referes to the values I imput manually
+# This one refers to the values I input manually
 predictions = model.predict(test_feats2)
 
 # If you have multiple test samples, you can use the following:
@@ -228,7 +228,7 @@ import pandas as pd
 import numpy as np
 
 # Load the CSV file with test data into a DataFrame
-test_data = pd.read_csv('./BA_NORMtoTakeda_Testing_1.csv')
+test_data = pd.read_csv('data_file_Testing_1.csv')
 
 # Assuming you have preprocessed your test data as needed (scaling, encoding, etc.)
 # Ensure that the preprocessing steps match what you did with your training data
@@ -263,7 +263,7 @@ else:
 import pandas as pd
 
 # Load the CSV file with test data into a DataFrame
-test_data = pd.read_csv('./BA_NORMtoTakeda_Testing_1.csv')
+test_data = pd.read_csv('data_file_Testing_1.csv')
 
 # Make predictions on the preprocessed test data
 predictions = model.predict(test_data)
@@ -405,7 +405,7 @@ print(f"False Positives (FP): {FP}")
 print(f"False Negatives (FN): {FN}")
 
 
-#Good Confusion Matix witht he data fed in np array
+# Good Confusion Matrix with the data fed in np array
 
 
 import numpy as np
@@ -464,8 +464,3 @@ disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['MASH','HC'])
 disp.plot(cmap='Blues', values_format='d')
 plt.title('Confusion Matrix')
 plt.show()
-
-
-
-
-
