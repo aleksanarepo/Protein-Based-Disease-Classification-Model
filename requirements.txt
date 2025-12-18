@@ -1,0 +1,21 @@
+# Core Dependencies
+tensorflow==2.14.0
+keras==2.14.0
+ml-dtypes==0.2.0
+
+# Data Processing
+pandas>=1.5.0
+numpy>=1.23.5
+
+# Machine Learning
+scikit-learn>=1.2.0
+
+# Visualization
+matplotlib>=3.6.0
+seaborn>=0.12.0
+
+# Additional TensorFlow Dependencies
+# (These are typically installed automatically with TensorFlow)
+# protobuf<5.0.0,>=3.20.3
+# h5py>=2.9.0
+# absl-py>=1.0.0
