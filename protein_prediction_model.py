@@ -78,10 +78,8 @@ print(type(one_hot))
 print(one_hot.shape)
 train_feats = featuresScale
 train_lab = one_hot
-####### Not doing the split of the data## but here is the code
-# train_feats, test_feats, train_lab, test_lab = train_test_split(featuresScale, one_hot, test_size= 0.33, random_state=RANDOM_SEED)
-# train_feats, test_feats, train_lab, test_lab = train_test_split(featuresScale, one_hot, test_size= 0.001, random_state=RANDOM_SEED)
-#
+
+
 
 
 print(type(train_feats))
