@@ -54,11 +54,10 @@ The model demonstrates excellent classification performance with near-perfect se
 ## File Structure
 
 ```
-Protein_prediction_Model.ipynb - Main notebook with complete pipeline
+Protein_prediction_Model.py - model with complete pipeline
 ```
 
 ## Notes
 
 - Threshold for classification can be adjusted (default: 0.97)
 - Model uses early stopping with patience=10
-- Training includes validation split for monitoring
