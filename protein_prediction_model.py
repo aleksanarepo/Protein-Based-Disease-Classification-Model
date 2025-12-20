@@ -188,7 +188,7 @@ for layerNum, layer in enumerate(model.layers):
 # Take the first observation from the train dataset to test the model.
 
 # model.predict(train_feats[0:1], batch_size=None, verbose=0 steps=None)
-test_feats2 = np.array([[-0.3723,-0.44599, -0.41352, -0.42817, -0.46598, -0.43858, -0.4114, -0.37505, -0.33182, -0.08496, -0.44128,-0.21554, 2.213466, 2.213466, -0.42611, -0.36788, -0.39346, -0.37888, -0.47216]])
+test_feats2 = np.array([[f1, f2, ..., f19]])
 print(type(test_feats2))
 print(test_feats2.shape)
 print(test_feats2[:5,:])
