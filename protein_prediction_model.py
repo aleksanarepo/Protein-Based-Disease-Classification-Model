@@ -347,7 +347,7 @@ from sklearn.metrics import confusion_matrix
 y_true = np.array([model_output])
 y_pred_probs = np.array([model_output])
 # Set your threshold
-threshold = 0.97
+threshold = MODEL_TRESHOLD
 
 # Convert predicted probabilities to binary predictions based on the threshold
 y_pred = (y_pred_probs[:, 1] >= threshold).astype(int)
@@ -377,7 +377,7 @@ y_true = np.array([model_output])
 y_pred_probs = np.array([model_output])
 
 # Set your threshold
-threshold = 0.97
+threshold = MODEL_TRESHOLD
 
 # Convert predicted probabilities to binary predictions based on the threshold
 y_pred = (y_pred_probs[:, 1] >= threshold).astype(int)
